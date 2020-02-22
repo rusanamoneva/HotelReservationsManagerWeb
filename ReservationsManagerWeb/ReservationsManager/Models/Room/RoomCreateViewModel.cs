@@ -1,15 +1,14 @@
-﻿using Data.Enumeration;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using Data.Enumeration;
 
-namespace Data.Entities
+namespace ReservationsManager.Models.Room
 {
-    public class Room
+    public class RoomCreateViewModel
     {
-        public int Id { get; set; }
-
-        public int Capacity { get; set; }
+        public int  Capacity { get; set; }
 
         public RoomTypeEnum RoomType { get; set; }
 

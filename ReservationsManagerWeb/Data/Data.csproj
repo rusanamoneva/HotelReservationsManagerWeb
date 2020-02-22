@@ -21,8 +21,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ReservationsManager\ReservationsManager.csproj" />
-  </ItemGroup>
-
 </Project>
