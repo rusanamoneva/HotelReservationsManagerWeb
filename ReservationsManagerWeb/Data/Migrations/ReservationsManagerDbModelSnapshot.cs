@@ -95,7 +95,7 @@ namespace Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Capacitu")
+                    b.Property<int>("Capacity")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsFree")
@@ -110,7 +110,7 @@ namespace Data.Migrations
                     b.Property<double>("PricePerChild")
                         .HasColumnType("float");
 
-                    b.Property<string>("Type")
+                    b.Property<string>("RoomType")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

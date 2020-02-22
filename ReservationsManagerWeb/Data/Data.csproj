@@ -1,9 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200222161226_RoomTypeChanged.cs" />
+    <Compile Remove="Migrations\20200222161226_RoomTypeChanged.Designer.cs" />
+    <Compile Remove="Migrations\20200222161626_ColumnsChanged.cs" />
+    <Compile Remove="Migrations\20200222161626_ColumnsChanged.Designer.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />

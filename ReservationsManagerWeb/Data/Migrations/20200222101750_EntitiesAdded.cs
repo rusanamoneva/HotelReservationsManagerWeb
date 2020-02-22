@@ -13,8 +13,8 @@ namespace Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Capacitu = table.Column<int>(nullable: false),
-                    Type = table.Column<string>(nullable: true),
+                    Capacity = table.Column<int>(nullable: false),
+                    RoomType = table.Column<string>(nullable: true),
                     IsFree = table.Column<bool>(nullable: false),
                     PricePerAdult = table.Column<double>(nullable: false),
                     PricePerChild = table.Column<double>(nullable: false),
