@@ -16,6 +16,13 @@ namespace Data
 
         public virtual DbSet<Reservation> Reservations { get; set; }
 
+        public ReservationsManagerDb()
+        { }
+
+        public ReservationsManagerDb(DbContextOptions<ReservationsManagerDb> options)
+            : base(options)
+        { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=HotelReservationsManagerDb;Trusted_Connection=True;Integrated Security = True;");
