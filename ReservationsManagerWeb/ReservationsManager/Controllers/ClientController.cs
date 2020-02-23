@@ -97,5 +97,78 @@ namespace ReservationsManager.Controllers
 
             return View(createModel);
         }
+
+        // GET: Cars/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Client client = await _context.Clients.FindAsync(id);
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            ClientEditViewModel model = new ClientEditViewModel
+            {
+                Id = client.Id,
+                Name = client.Name,
+                Surname = client.Surname,
+                Email = client.Email,
+                PhoneNumber = client.PhoneNumber,
+                IsAdult = client.IsAdult
+
+            };
+
+            return View(model);
+        }
+
+        // POST: Cars/Edit/5       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ClientEditViewModel editModel)
+        {
+            if (ModelState.IsValid)
+            {
+                Client client = new Client()
+                {
+                    Id = editModel.Id,
+                    Name = editModel.Name,
+                    Surname = editModel.Surname,
+                    Email = editModel.Email,
+                    PhoneNumber = editModel.PhoneNumber,
+                    IsAdult = editModel.IsAdult
+                };
+
+                try
+                {
+                    _context.Update(client);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ClientExists(client.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        client.Id = editModel.Id;
+                    }
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(editModel);
+        }
+
+        private bool ClientExists(int id)
+        {
+            return _context.Clients.Any(e => e.Id == id);
+        }
     }
 }

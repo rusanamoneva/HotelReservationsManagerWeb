@@ -24,26 +24,29 @@
     <tbody>
         @foreach (ClientViewModel item in Model.Items)
         {
-            <tr>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item)
-                </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Surname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsAdult)
-                </td>
-            </tr>
+        <tr>
+            @*<td>
+            @Html.DisplayFor(modelItem => item)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAdult)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>    
+            </td>
+        </tr>
         }
     </tbody>
     <ul class="pagination">
