@@ -1,0 +1,56 @@
+﻿@*@model IEnumerable<ReservationsManager.Models.Reservation.ReservationIndexViewModel>*@
+@using ReservationsManager.Models.Reservation
+@model ReservationsManager.Models.Reservation.ReservationIndexViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>CheckInDate</th>
+            <th>CheckOutDate</th>
+            <th>HasBreakfast</th>
+            <th>IsAllInclusive</th>
+            <th>FinalPrice</th>
+            <th>User</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ReservationViewModel item in Model.Items)
+        {
+        <tr>
+            @*<td>
+            @Html.DisplayFor(modelItem => item)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckInDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckOutDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HasBreakfast)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAllInclusive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinalPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

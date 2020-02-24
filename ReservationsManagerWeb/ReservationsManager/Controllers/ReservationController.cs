@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ReservationsManager.Models;
-using ReservationsManager.Models.Client;
+using ReservationsManager.Models.Reservation;
 using ReservationsManager.Models.Shared;
 using System;
 using System.Collections.Generic;
@@ -14,13 +14,13 @@ using System.Threading.Tasks;
 
 namespace ReservationsManager.Controllers
 {
-    public class ClientController : Controller
+    public class ReservationController : Controller
     {
-        private readonly ILogger<ClientController> _logger;
+        private readonly ILogger<ReservationController> _logger;
         private const int PageSize = 10;
         private readonly ReservationsManagerDb _context;
 
-        public ClientController(ILogger<ClientController> logger)
+        public ReservationController(ILogger<ReservationController> logger)
         {
             _logger = logger;
             _context = new ReservationsManagerDb();
@@ -43,23 +43,23 @@ namespace ReservationsManager.Controllers
         }
 
         // GET: Cars
-        public async Task<IActionResult> Index(ClientIndexViewModel model)
+        public async Task<IActionResult> Index(ReservationIndexViewModel model)
         {
             model.Pager ??= new PagerViewModel();
             model.Pager.CurrentPage = model.Pager.CurrentPage <= 0 ? 1 : model.Pager.CurrentPage;
 
-            List<ClientViewModel> items = await _context.Clients.Skip((model.Pager.CurrentPage - 1) * PageSize).Take(PageSize).Select(c => new ClientViewModel()
+            List<ReservationViewModel> items = await _context.Reservations.Skip((model.Pager.CurrentPage - 1) * PageSize).Take(PageSize).Select(r => new ReservationViewModel()
             {
-                Id = c.Id,
-                Name = c.Name,
-                Surname = c.Surname,
-                Email = c.Email,
-                PhoneNumber = c.PhoneNumber,
-                IsAdult = c.IsAdult
+                Id = r.Id,
+                User = r.User,
+                CheckInDate = r.CheckInDate,
+                CheckOutDate = r.CheckOutDate,
+                HasBreakfast = r.HasBreakfast,
+                IsAllInclusive = r.IsAllInclusive,
             }).ToListAsync();
 
             model.Items = items;
-            model.Pager.PagesCount = (int)Math.Ceiling(await _context.Clients.CountAsync() / (double)PageSize);
+            model.Pager.PagesCount = (int)Math.Ceiling(await _context.Reservations.CountAsync() / (double)PageSize);
 
             return View(model);
         }
@@ -67,7 +67,7 @@ namespace ReservationsManager.Controllers
         // GET: Cars/Create
         public IActionResult Create()
         {
-            ClientCreateViewModel model = new ClientCreateViewModel();
+            ReservationCreateViewModel model = new ReservationCreateViewModel();
 
             return View(model);
         }
@@ -75,21 +75,21 @@ namespace ReservationsManager.Controllers
         // POST: Cars/Create        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ClientCreateViewModel createModel)
+        public async Task<IActionResult> Create(ReservationCreateViewModel createModel)
         {
             if (ModelState.IsValid)
             {
-                Client client = new Client
+                Reservation reservation = new Reservation
                 {
-                    Name = createModel.Name,
-                    Surname = createModel.Surname,
-                    Email = createModel.Email,
-                    PhoneNumber = createModel.PhoneNumber,
-                    IsAdult = createModel.IsAdult
+                    User = createModel.User,
+                    CheckInDate = createModel.CheckInDate,
+                    CheckOutDate = createModel.CheckOutDate,
+                    HasBreakfast = createModel.HasBreakfast,
+                    IsAllInclusive = createModel.IsAllInclusive
                 };
 
 
-                _context.Add(client);
+                _context.Add(reservation);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
@@ -106,20 +106,20 @@ namespace ReservationsManager.Controllers
                 return NotFound();
             }
 
-            Client client = await _context.Clients.FindAsync(id);
-            if (client == null)
+            Reservation reservation = await _context.Reservations.FindAsync(id);
+            if (reservation == null)
             {
                 return NotFound();
             }
 
-            ClientEditViewModel model = new ClientEditViewModel
+            ReservationEditViewModel model = new ReservationEditViewModel
             {
-                Id = client.Id,
-                Name = client.Name,
-                Surname = client.Surname,
-                Email = client.Email,
-                PhoneNumber = client.PhoneNumber,
-                IsAdult = client.IsAdult
+                Id = reservation.Id,
+                User = reservation.User,
+                CheckInDate = reservation.CheckInDate,
+                CheckOutDate = reservation.CheckOutDate,
+                HasBreakfast = reservation.HasBreakfast,
+                IsAllInclusive = reservation.IsAllInclusive
 
             };
 
@@ -129,34 +129,34 @@ namespace ReservationsManager.Controllers
         // POST: Cars/Edit/5       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ClientEditViewModel editModel)
+        public async Task<IActionResult> Edit(ReservationEditViewModel editModel)
         {
             if (ModelState.IsValid)
             {
-                Client client = new Client()
+                Reservation reservation = new Reservation()
                 {
                     Id = editModel.Id,
-                    Name = editModel.Name,
-                    Surname = editModel.Surname,
-                    Email = editModel.Email,
-                    PhoneNumber = editModel.PhoneNumber,
-                    IsAdult = editModel.IsAdult
+                    User = editModel.User,
+                    CheckInDate = editModel.CheckInDate,
+                    CheckOutDate = editModel.CheckOutDate,
+                    HasBreakfast = editModel.HasBreakfast,
+                    IsAllInclusive = editModel.IsAllInclusive
                 };
 
                 try
                 {
-                    _context.Update(client);
+                    _context.Update(reservation);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClientExists(client.Id))
+                    if (!ReservationExists(reservation.Id))
                     {
                         return NotFound();
                     }
                     else
                     {
-                        client.Id = editModel.Id;
+                        reservation.Id = editModel.Id;
                     }
                 }
 
@@ -169,16 +169,16 @@ namespace ReservationsManager.Controllers
         // GET: Cars/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            Client client = await _context.Clients.FindAsync(id);
-            _context.Clients.Remove(client);
+            Reservation reservation = await _context.Reservations.FindAsync(id);
+            _context.Reservations.Remove(reservation);
             _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClientExists(int id)
+        private bool ReservationExists(int id)
         {
-            return _context.Clients.Any(e => e.Id == id);
+            return _context.Reservations.Any(e => e.Id == id);
         }
     }
 }

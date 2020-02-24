@@ -1,13 +1,13 @@
 ﻿using Data.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ReservationsManager.Models.Reservation
 {
-    public class ReservationViewModel
+    public class ReservationCreateViewModel
     {
-        public int Id { get; set; }
-
         //public int RoomId { get; set; }
 
         //public virtual Room Room { get; set; }

@@ -1,10 +1,12 @@
 ﻿using Data.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ReservationsManager.Models.Reservation
 {
-    public class ReservationViewModel
+    public class ReservationEditViewModel
     {
         public int Id { get; set; }
 
