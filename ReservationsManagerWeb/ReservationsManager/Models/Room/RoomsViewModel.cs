@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReservationsManager.Models.Room
 {
-    public class RoomViewModel
+    public class RoomsViewModel
     {
         public int Id { get; set; }
 

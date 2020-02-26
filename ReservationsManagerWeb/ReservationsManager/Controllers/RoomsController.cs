@@ -15,13 +15,13 @@ using System.Threading.Tasks;
 
 namespace ReservationsManager.Controllers
 {
-    public class RoomController : Controller
+    public class RoomsController : Controller
     {
-        private readonly ILogger<RoomController> _logger;
+        private readonly ILogger<RoomsController> _logger;
         private const int PageSize = 10;
         private readonly ReservationsManagerDb _context;
 
-        public RoomController(ILogger<RoomController> logger)
+        public RoomsController(ILogger<RoomsController> logger)
         {
             _logger = logger;
             _context = new ReservationsManagerDb();
@@ -44,12 +44,12 @@ namespace ReservationsManager.Controllers
         }
 
         // GET: Cars
-        public async Task<IActionResult> Index(RoomIndexViewModel model)
+        public async Task<IActionResult> Index(RoomsIndexViewModel model)
         {
             model.Pager ??= new PagerViewModel();
             model.Pager.CurrentPage = model.Pager.CurrentPage <= 0 ? 1 : model.Pager.CurrentPage;
 
-            List<RoomViewModel> items = await _context.Rooms.Skip((model.Pager.CurrentPage - 1) * PageSize).Take(PageSize).Select(c => new RoomViewModel()
+            List<RoomsViewModel> items = await _context.Rooms.Skip((model.Pager.CurrentPage - 1) * PageSize).Take(PageSize).Select(c => new RoomsViewModel()
             {
                 Id = c.Id,
                 Capacity = c.Capacity,
@@ -68,7 +68,7 @@ namespace ReservationsManager.Controllers
         // GET: Cars/Create
         public IActionResult Create()
         {
-            RoomCreateViewModel model = new RoomCreateViewModel();
+            RoomsCreateViewModel model = new RoomsCreateViewModel();
 
             return View(model);
         }
@@ -76,7 +76,7 @@ namespace ReservationsManager.Controllers
         // POST: Cars/Create        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(RoomCreateViewModel createModel)
+        public async Task<IActionResult> Create(RoomsCreateViewModel createModel)
         {
             //RoomTypeEnum roomTypeEnum = new RoomTypeEnum();
             //roomTypeEnum = (RoomTypeEnum)(createModel.RoomType);
@@ -118,7 +118,7 @@ namespace ReservationsManager.Controllers
                 return NotFound();
             }
 
-            RoomEditViewModel model = new RoomEditViewModel
+            RoomsEditViewModel model = new RoomsEditViewModel
             {
                 Id = room.Id,
                 Capacity = room.Capacity,
@@ -136,7 +136,7 @@ namespace ReservationsManager.Controllers
         // POST: Cars/Edit/5       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(RoomEditViewModel editModel)
+        public async Task<IActionResult> Edit(RoomsEditViewModel editModel)
         {
             if (ModelState.IsValid)
             {

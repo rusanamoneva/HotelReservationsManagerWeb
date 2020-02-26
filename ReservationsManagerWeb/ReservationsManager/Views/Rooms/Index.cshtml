@@ -1,6 +1,6 @@
 ﻿@using ReservationsManager.Models.Room
 @*@model IEnumerable<ReservationsManager.Models.Room.RoomIndexViewModel>*@
-@model ReservationsManager.Models.Room.RoomIndexViewModel
+@model ReservationsManager.Models.Room.RoomsIndexViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -23,7 +23,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (RoomViewModel item in Model.Items)
+        @foreach (RoomsViewModel item in Model.Items)
         {
         <tr>
             @*<td>

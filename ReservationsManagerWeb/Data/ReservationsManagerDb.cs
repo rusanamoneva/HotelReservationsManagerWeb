@@ -1,4 +1,6 @@
 ﻿using Data.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,9 +8,9 @@ using System.Text;
 
 namespace Data
 {
-    public class ReservationsManagerDb : DbContext
+    public class ReservationsManagerDb : IdentityDbContext<User, IdentityRole, string>
     {
-        public virtual DbSet<User> Users { get; set; }
+        //public virtual DbSet<User> Users { get; set; }
 
         public virtual DbSet<Client> Clients { get; set; }
 

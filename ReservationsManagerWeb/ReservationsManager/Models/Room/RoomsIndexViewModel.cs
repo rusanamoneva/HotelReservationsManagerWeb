@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ReservationsManager.Models.Room
 {
-    public class RoomIndexViewModel
+    public class RoomsIndexViewModel
     {
         public PagerViewModel Pager { get; set; }
 
-        public ICollection<RoomViewModel> Items { get; set; }
+        public ICollection<RoomsViewModel> Items { get; set; }
     }
 }

@@ -5,10 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200222161226_RoomTypeChanged.cs" />
-    <Compile Remove="Migrations\20200222161226_RoomTypeChanged.Designer.cs" />
-    <Compile Remove="Migrations\20200222161626_ColumnsChanged.cs" />
-    <Compile Remove="Migrations\20200222161626_ColumnsChanged.Designer.cs" />
+    <Compile Remove="Migrations\20200225124641_Initial.cs" />
+    <Compile Remove="Migrations\20200225124641_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
