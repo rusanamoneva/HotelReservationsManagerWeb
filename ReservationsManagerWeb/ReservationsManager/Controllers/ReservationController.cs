@@ -1,6 +1,7 @@
 ﻿using Data;
 using Data.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ReservationsManager.Controllers
@@ -22,11 +24,13 @@ namespace ReservationsManager.Controllers
         private readonly ILogger<ReservationController> _logger;
         private const int PageSize = 10;
         private readonly ReservationsManagerDb _context;
+        private UserManager<User> UserManager { get; set; }
 
-        public ReservationController(ILogger<ReservationController> logger)
+        public ReservationController(ILogger<ReservationController> logger, UserManager<User> userManager)
         {
             _logger = logger;
             _context = new ReservationsManagerDb();
+            this.UserManager = userManager;
         }
 
         //public IActionResult Index()
@@ -102,6 +106,14 @@ namespace ReservationsManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RequestReservationCreateViewModel createModel)
         {
+            //User user = _context.Users.Find(userManager.GetUserId(User));
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
+            //var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
+
+            User user = await UserManager.GetUserAsync(User);
+            //string userEmail = user?.Email; // will give the user's Email
+
             List<Client> clients = new List<Client>();
 
             foreach (var clientId in createModel.ClientsId)
@@ -123,7 +135,9 @@ namespace ReservationsManager.Controllers
             {
                 Reservation reservation = new Reservation
                 {
-                    User = createModel.User,
+                    //User = createModel.User,
+                    UserId = user.Id,
+                    //User = user,
                     CheckInDate = createModel.CheckInDate,
                     CheckOutDate = createModel.CheckOutDate,
                     HasBreakfast = createModel.HasBreakfast,

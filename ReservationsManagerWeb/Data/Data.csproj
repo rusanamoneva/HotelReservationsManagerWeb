@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20200225124641_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200227115758_ClientListAdded.cs" />
     <Compile Remove="Migrations\20200227115758_ClientListAdded.Designer.cs" />
+    <Compile Remove="Migrations\20200227151631_UserIdChanged.cs" />
+    <Compile Remove="Migrations\20200227151631_UserIdChanged.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

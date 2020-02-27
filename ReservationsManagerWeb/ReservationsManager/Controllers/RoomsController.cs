@@ -59,6 +59,7 @@ namespace ReservationsManager.Controllers
                 Capacity = c.Capacity,
                 PricePerAdult = c.PricePerAdult,
                 PricePerChild = c.PricePerChild,
+                RoomType = c.RoomType,
                 IsFree = c.IsFree,
                 Number = c.Number
             }).ToListAsync();
