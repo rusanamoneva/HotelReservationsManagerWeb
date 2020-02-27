@@ -7,6 +7,7 @@ namespace Data.Entities
     public class ClientReservation
     {
         public int Id { get; set; }
+
         public int ClientId { get; set; }
 
         public virtual Client Client { get; set; }

@@ -32,6 +32,30 @@
                     <input class="form-check-input" asp-for="IsAllInclusive" /> @Html.DisplayNameFor(model => model.IsAllInclusive)
                 </label>
             </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <select name="ClientsId" multiple>
+                        @foreach (var client in Model.CreateClient)
+                        {
+                            <option value="@client.Id">
+                                @client.Name
+                            </option>
+                        }
+                    </select>
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <select name="RoomId">
+                        @foreach (var room in Model.RoomsAdded)
+                        {
+                            <option value="@room.Id">
+                                @room.RoomType Price for adult: @room.PricePerAdult Price for child: @room.PricePerChild
+                            </option>
+                        }
+                    </select>
+                </label>
+            </div>
             <div class="form-group">
                 <label asp-for="FinalPrice" class="control-label"></label>
                 <input asp-for="FinalPrice" class="form-control" />

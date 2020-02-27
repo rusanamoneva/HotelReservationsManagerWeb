@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ReservationsManager.Models.Reservation
 {
-    public class ReservationCreateViewModel
+    public class RequestReservationCreateViewModel
     {
         //public int RoomId { get; set; }
 
@@ -19,9 +19,11 @@ namespace ReservationsManager.Models.Reservation
 
         //public virtual List<Client> Clients { get; set; }
 
-        public List<ReservationCreateClientViewModel> CreateClient { get; set; }
+        public List<int> ClientsId { get; set; }
 
-        public List<ReservationCreateRoomViewModel> RoomsAdded { get; set; }
+        public int RoomId { get; set; }
+
+        //public Room roomAdded { get; set; }
 
         [Required]
         public DateTime CheckInDate { get; set; }

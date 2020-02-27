@@ -19,6 +19,7 @@
             <th>IsAllInclusive</th>
             <th>FinalPrice</th>
             <th>User</th>
+            <th>Clients</th>
         </tr>
     </thead>
     <tbody>
@@ -45,6 +46,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User)
+            </td>
+            <td>
+                @foreach (var client in item.ClientReservations)
+                {
+                    Html.Display(client.Client.Name);
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -18,6 +18,8 @@ namespace ReservationsManager.Models.Reservation
 
         //public virtual List<Client> Clients { get; set; }
 
+        public int MyProperty { get; set; }
+
         public DateTime CheckInDate { get; set; }
 
         public DateTime CheckOutDate { get; set; }
@@ -27,5 +29,7 @@ namespace ReservationsManager.Models.Reservation
         public bool IsAllInclusive { get; set; }
 
         public double FinalPrice { get; set; }
+
+        public List<ClientReservation> ClientReservations { get; set; }
     }
 }

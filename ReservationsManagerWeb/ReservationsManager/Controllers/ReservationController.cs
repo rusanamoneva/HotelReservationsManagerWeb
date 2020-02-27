@@ -60,6 +60,7 @@ namespace ReservationsManager.Controllers
                 CheckOutDate = r.CheckOutDate,
                 HasBreakfast = r.HasBreakfast,
                 IsAllInclusive = r.IsAllInclusive,
+                ClientReservations = r.ClientReservations.ToList()
             }).ToListAsync();
 
             model.Items = items;
@@ -73,14 +74,51 @@ namespace ReservationsManager.Controllers
         {
             ReservationCreateViewModel model = new ReservationCreateViewModel();
 
+            List<ReservationCreateClientViewModel> clients = _context.Clients
+                .Select(x => new ReservationCreateClientViewModel(x.Id, x.Name))
+                .ToList();
+
+            List<ReservationCreateRoomViewModel> rooms = _context.Rooms.Select(x => new ReservationCreateRoomViewModel(x.Id, x.RoomType, x.PricePerAdult, x.PricePerChild, x.IsFree)).ToList();
+            //rooms = rooms.Where(r => r.IsFree = true).ToList();
+
+            List<ReservationCreateRoomViewModel> freeRooms = new List<ReservationCreateRoomViewModel>();
+
+            foreach (var room in rooms)
+            {
+                if (room.IsFree)
+                {
+                    freeRooms.Add(room);
+                }
+            }
+
+            model.CreateClient = clients;
+            model.RoomsAdded = freeRooms;
+
             return View(model);
         }
 
         // POST: Reservation/Create        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ReservationCreateViewModel createModel)
+        public async Task<IActionResult> Create(RequestReservationCreateViewModel createModel)
         {
+            List<Client> clients = new List<Client>();
+
+            foreach (var clientId in createModel.ClientsId)
+            {
+                Client client = new Client();
+                //client = (Client)_context.Clients.Where(x => x.Id == clientId);
+                client = _context.Clients.FirstOrDefault(x => x.Id == clientId);
+                clients.Add(client);
+            }
+
+            Room room = _context.Rooms.FirstOrDefault(x => x.Id == createModel.RoomId);
+            room.IsFree = false;
+            //room = _context.Rooms.FirstOrDefault(x => x.Id == createModel.RoomId);
+
+            //ClientReservation clientReservation = new ClientReservation();
+            //clientReservation.Client = clients[0];
+
             if (ModelState.IsValid)
             {
                 Reservation reservation = new Reservation
@@ -89,7 +127,9 @@ namespace ReservationsManager.Controllers
                     CheckInDate = createModel.CheckInDate,
                     CheckOutDate = createModel.CheckOutDate,
                     HasBreakfast = createModel.HasBreakfast,
-                    IsAllInclusive = createModel.IsAllInclusive
+                    IsAllInclusive = createModel.IsAllInclusive,
+                    Room = room,
+                    ClientReservations = clients.Select(client => new ClientReservation { Client = client }).ToList()
                 };
 
 
