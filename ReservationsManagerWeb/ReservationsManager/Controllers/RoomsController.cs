@@ -1,6 +1,7 @@
 ﻿using Data;
 using Data.Entities;
 using Data.Enumeration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -15,6 +16,8 @@ using System.Threading.Tasks;
 
 namespace ReservationsManager.Controllers
 {
+    //[Authorize(Roles = "User")]
+    [Authorize]
     public class RoomsController : Controller
     {
         private readonly ILogger<RoomsController> _logger;
@@ -43,7 +46,8 @@ namespace ReservationsManager.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        // GET: Cars
+        [AllowAnonymous]
+        // GET: Room
         public async Task<IActionResult> Index(RoomsIndexViewModel model)
         {
             model.Pager ??= new PagerViewModel();
@@ -65,7 +69,7 @@ namespace ReservationsManager.Controllers
             return View(model);
         }
 
-        // GET: Cars/Create
+        // GET: Room/Create
         public IActionResult Create()
         {
             RoomsCreateViewModel model = new RoomsCreateViewModel();
@@ -73,7 +77,7 @@ namespace ReservationsManager.Controllers
             return View(model);
         }
 
-        // POST: Cars/Create        
+        // POST: Room/Create        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RoomsCreateViewModel createModel)
@@ -104,7 +108,7 @@ namespace ReservationsManager.Controllers
             return View(createModel);
         }
 
-        // GET: Cars/Edit/5
+        // GET: Room/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -133,7 +137,7 @@ namespace ReservationsManager.Controllers
             return View(model);
         }
 
-        // POST: Cars/Edit/5       
+        // POST: Room/Edit/5       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(RoomsEditViewModel editModel)
@@ -173,7 +177,7 @@ namespace ReservationsManager.Controllers
             return View(editModel);
         }
 
-        // GET: Cars/Delete/5
+        // GET: Room/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             Room room = await _context.Rooms.FindAsync(id);

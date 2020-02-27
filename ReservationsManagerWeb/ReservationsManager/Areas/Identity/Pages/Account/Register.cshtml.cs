@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Data;
 
 namespace ReservationsManager.Areas.Identity.Pages.Account
 {
@@ -23,16 +24,19 @@ namespace ReservationsManager.Areas.Identity.Pages.Account
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
+        private readonly ReservationsManagerDb reservationsManagerDb;
         //private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger)
+            ILogger<RegisterModel> logger,
+            ReservationsManagerDb reservationsManagerDb)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            this.reservationsManagerDb = reservationsManagerDb;
             //_emailSender = emailSender;
         }
 
@@ -87,6 +91,15 @@ namespace ReservationsManager.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId = user.Id, code = code },
                         protocol: Request.Scheme);
+
+                    if (this.reservationsManagerDb.Users.Count() == 1)
+                    {
+                        await _userManager.AddToRoleAsync(user, "Admin");
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
 
                     //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                     //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

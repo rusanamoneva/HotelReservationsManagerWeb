@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,8 @@ using System.Threading.Tasks;
 
 namespace ReservationsManager.Controllers
 {
+    //[Authorize(Roles = "User")]
+    [Authorize]
     public class ClientController : Controller
     {
         private readonly ILogger<ClientController> _logger;
@@ -42,7 +45,8 @@ namespace ReservationsManager.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        // GET: Cars
+        [AllowAnonymous]
+        // GET: Client
         public async Task<IActionResult> Index(ClientIndexViewModel model)
         {
             model.Pager ??= new PagerViewModel();
@@ -61,10 +65,25 @@ namespace ReservationsManager.Controllers
             model.Items = items;
             model.Pager.PagesCount = (int)Math.Ceiling(await _context.Clients.CountAsync() / (double)PageSize);
 
+            
+           
             return View(model);
         }
 
-        // GET: Cars/Create
+        //public async Task<IActionResult> Index(string searchString)
+        //{
+        //    var movies = from m in _context.Clients
+        //                 select m;
+
+        //    if (!String.IsNullOrEmpty(searchString))
+        //    {
+        //        movies = movies.Where(s => s.Name.Contains(searchString));
+        //    }
+
+        //    return View(await movies.ToListAsync());
+        //}
+
+        // GET: Client/Create
         public IActionResult Create()
         {
             ClientCreateViewModel model = new ClientCreateViewModel();
@@ -72,7 +91,7 @@ namespace ReservationsManager.Controllers
             return View(model);
         }
 
-        // POST: Cars/Create        
+        // POST: Client/Create        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ClientCreateViewModel createModel)
@@ -98,7 +117,7 @@ namespace ReservationsManager.Controllers
             return View(createModel);
         }
 
-        // GET: Cars/Edit/5
+        // GET: Client/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -126,7 +145,7 @@ namespace ReservationsManager.Controllers
             return View(model);
         }
 
-        // POST: Cars/Edit/5       
+        // POST: Client/Edit/5       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ClientEditViewModel editModel)
@@ -166,7 +185,7 @@ namespace ReservationsManager.Controllers
             return View(editModel);
         }
 
-        // GET: Cars/Delete/5
+        // GET: Client/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             Client client = await _context.Clients.FindAsync(id);
@@ -174,6 +193,20 @@ namespace ReservationsManager.Controllers
             _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Search(string searchString)
+        {
+            var clients = from m in _context.Clients
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                clients = clients.Where(s => s.Name.Contains(searchString));
+            }
+
+            return View(await clients.ToListAsync());
         }
 
         private bool ClientExists(int id)

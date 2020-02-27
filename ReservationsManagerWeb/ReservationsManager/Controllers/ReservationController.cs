@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,8 @@ using System.Threading.Tasks;
 
 namespace ReservationsManager.Controllers
 {
+    //[Authorize(Roles = "User")]
+    [Authorize]
     public class ReservationController : Controller
     {
         private readonly ILogger<ReservationController> _logger;
@@ -42,7 +45,8 @@ namespace ReservationsManager.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        // GET: Cars
+        [AllowAnonymous]
+        // GET: Reservation
         public async Task<IActionResult> Index(ReservationIndexViewModel model)
         {
             model.Pager ??= new PagerViewModel();
@@ -64,7 +68,7 @@ namespace ReservationsManager.Controllers
             return View(model);
         }
 
-        // GET: Cars/Create
+        // GET: Reservation/Create
         public IActionResult Create()
         {
             ReservationCreateViewModel model = new ReservationCreateViewModel();
@@ -72,7 +76,7 @@ namespace ReservationsManager.Controllers
             return View(model);
         }
 
-        // POST: Cars/Create        
+        // POST: Reservation/Create        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ReservationCreateViewModel createModel)
@@ -98,7 +102,7 @@ namespace ReservationsManager.Controllers
             return View(createModel);
         }
 
-        // GET: Cars/Edit/5
+        // GET: Reservation/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -126,7 +130,7 @@ namespace ReservationsManager.Controllers
             return View(model);
         }
 
-        // POST: Cars/Edit/5       
+        // POST: Reservation/Edit/5       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ReservationEditViewModel editModel)
@@ -166,7 +170,7 @@ namespace ReservationsManager.Controllers
             return View(editModel);
         }
 
-        // GET: Cars/Delete/5
+        // GET: Reservation/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             Reservation reservation = await _context.Reservations.FindAsync(id);

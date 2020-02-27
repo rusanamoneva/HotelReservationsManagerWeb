@@ -32,7 +32,16 @@ namespace ReservationsManager
             services.AddDbContext<ReservationsManagerDb>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequiredUniqueChars = 0;
+            })
                 .AddEntityFrameworkStores<ReservationsManagerDb>()
                 .AddDefaultTokenProviders();
             services.AddControllersWithViews();

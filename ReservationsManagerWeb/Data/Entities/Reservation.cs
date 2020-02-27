@@ -16,7 +16,7 @@ namespace Data.Entities
 
         public virtual User User { get; set; }
 
-        public virtual List<Client> Clients { get; set; }
+        //public virtual List<Client> Clients { get; set; }
 
         public DateTime CheckInDate { get; set; }
 
@@ -27,5 +27,7 @@ namespace Data.Entities
         public bool IsAllInclusive { get; set; }
 
         public double FinalPrice { get; set; }
+
+        public ICollection<ClientReservation> ClientReservations { get; set; }
     }
 }

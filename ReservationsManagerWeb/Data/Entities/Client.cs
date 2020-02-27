@@ -17,5 +17,9 @@ namespace Data.Entities
         public string Email { get; set; }
 
         public bool IsAdult { get; set; }
+
+        public ICollection<ClientReservation> ClientReservations { get; set; }
+
     }
 }
+        
