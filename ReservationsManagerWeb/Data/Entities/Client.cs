@@ -18,7 +18,7 @@ namespace Data.Entities
 
         public bool IsAdult { get; set; }
 
-        public ICollection<ClientReservation> ClientReservations { get; set; }
+        public virtual ICollection<ClientReservation> ClientReservations { get; set; }
 
     }
 }

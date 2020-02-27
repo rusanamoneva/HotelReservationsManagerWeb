@@ -28,6 +28,6 @@ namespace Data.Entities
 
         public double FinalPrice { get; set; }
 
-        public ICollection<ClientReservation> ClientReservations { get; set; }
+        public virtual ICollection<ClientReservation> ClientReservations { get; set; }
     }
 }
