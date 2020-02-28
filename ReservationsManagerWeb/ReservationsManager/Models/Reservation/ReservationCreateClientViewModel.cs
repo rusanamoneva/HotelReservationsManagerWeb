@@ -13,9 +13,7 @@ namespace ReservationsManager.Models.Reservation
         public string Name { get; set; }
 
         public ReservationCreateClientViewModel()
-        {
-
-        }
+        { }
 
         public ReservationCreateClientViewModel(int id, string name)
         {

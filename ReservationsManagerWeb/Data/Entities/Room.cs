@@ -20,5 +20,18 @@ namespace Data.Entities
         public double PricePerChild { get; set; }
 
         public int Number { get; set; }
+
+        public Room()
+        { }
+
+        public Room(int capacity, RoomTypeEnum roomType, bool isFree, double pricePerAdult, double pricePerChild, int number)
+        {
+            Capacity = capacity;
+            RoomType = roomType;
+            IsFree = isFree;
+            PricePerAdult = pricePerAdult;
+            PricePerChild = pricePerChild;
+            Number = number;
+        }
     }
 }

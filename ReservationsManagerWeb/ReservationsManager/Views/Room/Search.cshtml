@@ -1,0 +1,67 @@
+﻿@*@model IEnumerable<ReservationsManager.Models.Room.RoomsViewModel>*@
+@model IEnumerable<Data.Entities.Room>
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Rooms</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Capacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsFree)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PricePerAdult)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PricePerChild)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Capacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsFree)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PricePerAdult)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PricePerChild)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

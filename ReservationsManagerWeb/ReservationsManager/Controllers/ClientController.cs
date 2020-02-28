@@ -70,19 +70,6 @@ namespace ReservationsManager.Controllers
             return View(model);
         }
 
-        //public async Task<IActionResult> Index(string searchString)
-        //{
-        //    var movies = from m in _context.Clients
-        //                 select m;
-
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        movies = movies.Where(s => s.Name.Contains(searchString));
-        //    }
-
-        //    return View(await movies.ToListAsync());
-        //}
-
         // GET: Client/Create
         public IActionResult Create()
         {

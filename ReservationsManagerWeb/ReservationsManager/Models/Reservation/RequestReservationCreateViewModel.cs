@@ -36,5 +36,23 @@ namespace ReservationsManager.Models.Reservation
         public bool IsAllInclusive { get; set; }
 
         public double FinalPrice { get; set; }
+
+        public RequestReservationCreateViewModel()
+        { }
+
+        public RequestReservationCreateViewModel(Data.Entities.Room room, User user
+            , List<int> clientsId, int roomId, DateTime checkInDate, DateTime checkOutDate
+            , bool hasBreakfast, bool isAllInclusive, double finalPrice)
+        {
+            Room = room;
+            User = user;
+            ClientsId = clientsId;
+            RoomId = roomId;
+            CheckInDate = checkInDate;
+            CheckOutDate = checkOutDate;
+            HasBreakfast = hasBreakfast;
+            IsAllInclusive = isAllInclusive;
+            FinalPrice = finalPrice;
+        }
     }
 }

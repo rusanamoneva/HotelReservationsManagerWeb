@@ -24,9 +24,14 @@ namespace ReservationsManager.Controllers
     [Authorize]
     public class ReservationController : Controller
     {
-        private readonly ILogger<ReservationController> _logger;
+        private const string password = Constants.emailPassword;
+
         private const int PageSize = 10;
+
+        private readonly ILogger<ReservationController> _logger;
+
         private readonly ReservationsManagerDb _context;
+
         private UserManager<User> UserManager { get; set; }
 
         public ReservationController(ILogger<ReservationController> logger, UserManager<User> userManager)
@@ -161,15 +166,10 @@ namespace ReservationsManager.Controllers
                     message.Subject = "Rreservation";
                     message.Body = new TextPart("Successful reservation!");
 
-                    //var emailClient = new SmtpClient();
-                    //emailClient.Send(message);
-
                     using (var emailClient = new SmtpClient())
                     {
                         emailClient.Connect("smtp.gmail.com", 587, false);
-                        emailClient.Authenticate("rusanamoneva@gmail.com", "testpass_01");
-                       
-                        //emailClient.Connect()
+                        emailClient.Authenticate("rusanamoneva@gmail.com", password);
                         emailClient.Send(message);
                         emailClient.Disconnect(true);
                     }
@@ -254,6 +254,7 @@ namespace ReservationsManager.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             Reservation reservation = await _context.Reservations.FindAsync(id);
+            reservation.Room.IsFree = true;
             _context.Reservations.Remove(reservation);
             _context.SaveChangesAsync();
 

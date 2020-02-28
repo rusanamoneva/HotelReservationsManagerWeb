@@ -19,9 +19,7 @@ namespace ReservationsManager.Models.Reservation
         public bool IsFree { get; set; }
 
         public ReservationCreateRoomViewModel()
-        {
-
-        }
+        { }
 
         public ReservationCreateRoomViewModel(int id, RoomTypeEnum roomType, double pricePerAdult, double pricePerChild, bool isFree)
         {

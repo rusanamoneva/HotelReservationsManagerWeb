@@ -31,5 +31,26 @@ namespace Data.Entities
         public DateTime FiredDate { get; set; }
 
         public bool IsActive { get; set; }
+
+        public User()
+        { }
+
+        public User(string name, string pass, string firstName
+            , string fathersName, string surname, int personalNumber
+            , int phoneNumber, string email, DateTime hireDate
+            , DateTime firedDate, bool isActive)
+        {
+            Name = name;
+            Pass = pass;
+            FirstName = firstName;
+            FathersName = fathersName;
+            Surname = surname;
+            PersonalNumber = personalNumber;
+            PhoneNumber = phoneNumber;
+            Email = email;
+            HireDate = hireDate;
+            FiredDate = firedDate;
+            IsActive = isActive;
+        }
     }
 }

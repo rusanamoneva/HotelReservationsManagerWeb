@@ -10,6 +10,8 @@ namespace Data
 {
     public class ReservationsManagerDb : IdentityDbContext<User, IdentityRole, string>
     {
+        private const string connectionString = Constants.connectionString;
+
         //public virtual DbSet<User> Users { get; set; }
 
         public virtual DbSet<Client> Clients { get; set; }
@@ -27,7 +29,7 @@ namespace Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=HotelReservationsManagerDb;Trusted_Connection=True;Integrated Security = True;");
+            optionsBuilder.UseSqlServer(connectionString);
             optionsBuilder.UseLazyLoadingProxies();
 
             base.OnConfiguring(optionsBuilder);

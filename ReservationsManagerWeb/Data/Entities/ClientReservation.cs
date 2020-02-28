@@ -15,5 +15,16 @@ namespace Data.Entities
         public int ReservationId { get; set; }
 
         public virtual Reservation Reservation { get; set; }
+
+        public ClientReservation()
+        { }
+
+        public ClientReservation(int clientId, Client client, int reservationId, Reservation reservation)
+        {
+            ClientId = clientId;
+            Client = client;
+            ReservationId = reservationId;
+            Reservation = reservation;
+        }
     }
 }

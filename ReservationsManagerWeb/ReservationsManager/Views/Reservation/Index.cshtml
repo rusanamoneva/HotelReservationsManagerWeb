@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Reservations</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -25,39 +25,39 @@
     <tbody>
         @foreach (ReservationViewModel item in Model.Items)
         {
-        <tr>
-            @*<td>
-            @Html.DisplayFor(modelItem => item)
-        </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.CheckInDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CheckOutDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HasBreakfast)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsAllInclusive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FinalPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Email)
-            </td>
-            <td>
-                @foreach (var client in item.ClientReservations)
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CheckInDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CheckOutDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HasBreakfast)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsAllInclusive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinalPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Email)
+                </td>
+                <td>
+                    @foreach (var client in item.ClientReservations)
+                    {
+                        Html.Display(client.Client.Name);
+                    }
+                </td>
+                @if (this.User.Identity.IsAuthenticated)
                 {
-                    Html.Display(client.Client.Name);
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
                 }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+            </tr>
         }
     </tbody>
 </table>

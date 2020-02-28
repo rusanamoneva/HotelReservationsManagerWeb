@@ -29,5 +29,21 @@ namespace ReservationsManager.Models.Reservation
         public bool IsAllInclusive { get; set; }
 
         public double FinalPrice { get; set; }
+
+        public ReservationEditViewModel()
+        { }
+
+        public ReservationEditViewModel(int id, User user, DateTime checkInDate
+            , DateTime checkOutDate, bool hasBreakfast
+            , bool isAllInclusive, double finalPrice)
+        {
+            Id = id;
+            User = user;
+            CheckInDate = checkInDate;
+            CheckOutDate = checkOutDate;
+            HasBreakfast = hasBreakfast;
+            IsAllInclusive = isAllInclusive;
+            FinalPrice = finalPrice;
+        }
     }
 }

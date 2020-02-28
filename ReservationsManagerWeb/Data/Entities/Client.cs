@@ -20,6 +20,18 @@ namespace Data.Entities
 
         public virtual ICollection<ClientReservation> ClientReservations { get; set; }
 
+        public Client()
+        { }
+
+        public Client(string name, string surname, int phoneNumber, string email, bool isAdult, ICollection<ClientReservation> clientReservations)
+        {
+            Name = name;
+            Surname = surname;
+            PhoneNumber = phoneNumber;
+            Email = email;
+            IsAdult = isAdult;
+            ClientReservations = clientReservations;
+        }
     }
 }
         

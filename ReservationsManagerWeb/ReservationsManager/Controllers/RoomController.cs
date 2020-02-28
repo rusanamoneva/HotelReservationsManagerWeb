@@ -18,13 +18,13 @@ namespace ReservationsManager.Controllers
 {
     //[Authorize(Roles = "User")]
     [Authorize]
-    public class RoomsController : Controller
+    public class RoomController : Controller
     {
-        private readonly ILogger<RoomsController> _logger;
+        private readonly ILogger<RoomController> _logger;
         private const int PageSize = 10;
         private readonly ReservationsManagerDb _context;
 
-        public RoomsController(ILogger<RoomsController> logger)
+        public RoomController(ILogger<RoomController> logger)
         {
             _logger = logger;
             _context = new ReservationsManagerDb();
@@ -186,6 +186,23 @@ namespace ReservationsManager.Controllers
             _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Search(int searchString)
+        {
+            var rooms = from r in _context.Rooms
+                          select r;
+
+            //if (!String.IsNullOrEmpty(searchString))
+
+            //{
+            //    rooms = rooms.Where(s => (string)s.RoomType == searchString);
+            //}
+
+            rooms = rooms.Where(r => r.Capacity == searchString);
+
+            return View(await rooms.ToListAsync());
         }
 
         private bool RoomExists(int id)

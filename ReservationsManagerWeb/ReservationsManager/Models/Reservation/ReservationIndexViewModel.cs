@@ -12,5 +12,14 @@ namespace ReservationsManager.Models.Reservation
         public PagerViewModel Pager { get; set; }
 
         public ICollection<ReservationViewModel> Items { get; set; }
+
+        public ReservationIndexViewModel()
+        { }
+
+        public ReservationIndexViewModel(PagerViewModel pager, ICollection<ReservationViewModel> items)
+        {
+            Pager = pager;
+            Items = items;
+        }
     }
 }

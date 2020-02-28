@@ -22,5 +22,19 @@ namespace ReservationsManager.Models.Room
         public double PricePerChild { get; set; }
 
         public int Number { get; set; }
+
+        public RoomsCreateViewModel()
+        { }
+
+        public RoomsCreateViewModel(int capacity, RoomTypeEnum roomType, bool isFree
+            , double pricePerAdult, double pricePerChild, int number)
+        {
+            Capacity = capacity;
+            RoomType = roomType;
+            IsFree = isFree;
+            PricePerAdult = pricePerAdult;
+            PricePerChild = pricePerChild;
+            Number = number;
+        }
     }
 }

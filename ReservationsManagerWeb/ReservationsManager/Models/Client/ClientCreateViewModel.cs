@@ -22,5 +22,17 @@ namespace ReservationsManager.Models.Client
         public string Email { get; set; }
 
         public bool IsAdult { get; set; }
+
+        public ClientCreateViewModel()
+        { }
+
+        public ClientCreateViewModel(string name, string surname, int phoneNumber, string email, bool isAdult)
+        {
+            Name = name;
+            Surname = surname;
+            PhoneNumber = phoneNumber;
+            Email = email;
+            IsAdult = isAdult;
+        }
     }
 }
