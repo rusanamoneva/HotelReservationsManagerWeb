@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Data;
 using Data.Entities;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace ReservationsManager
 {
@@ -46,6 +47,8 @@ namespace ReservationsManager
                 .AddDefaultTokenProviders();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

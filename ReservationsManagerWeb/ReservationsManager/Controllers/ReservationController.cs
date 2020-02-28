@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MimeKit;
 using ReservationsManager.Models;
 using ReservationsManager.Models.Reservation;
 using ReservationsManager.Models.Shared;
@@ -12,8 +13,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+//using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using MailKit.Net.Smtp;
 
 namespace ReservationsManager.Controllers
 {
@@ -149,6 +152,29 @@ namespace ReservationsManager.Controllers
 
                 _context.Add(reservation);
                 await _context.SaveChangesAsync();
+
+                foreach (Client client in clients)
+                {
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("ReservationManager", "rusanamoneva@gmail.com"));
+                    message.To.Add(new MailboxAddress($"{client.Email}"));
+                    message.Subject = "Rreservation";
+                    message.Body = new TextPart("Successful reservation!");
+
+                    //var emailClient = new SmtpClient();
+                    //emailClient.Send(message);
+
+                    using (var emailClient = new SmtpClient())
+                    {
+                        emailClient.Connect("smtp.gmail.com", 587, false);
+                        emailClient.Authenticate("rusanamoneva@gmail.com", "testpass_01");
+                       
+                        //emailClient.Connect()
+                        emailClient.Send(message);
+                        emailClient.Disconnect(true);
+                    }
+                }
+                
 
                 return RedirectToAction(nameof(Index));
             }

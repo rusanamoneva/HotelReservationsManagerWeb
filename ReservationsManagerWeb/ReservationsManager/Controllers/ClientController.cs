@@ -203,7 +203,7 @@ namespace ReservationsManager.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                clients = clients.Where(s => s.Name.Contains(searchString));
+                clients = clients.Where(s => s.Name == searchString || s.Surname == searchString);
             }
 
             return View(await clients.ToListAsync());
