@@ -261,6 +261,13 @@ namespace ReservationsManager.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //public async Task<IActionResult> Details(ReservationDetailsViewModel model)
+        //{
+
+
+        //    return View(model);
+        //}
+
         private bool ReservationExists(int id)
         {
             return _context.Reservations.Any(e => e.Id == id);
