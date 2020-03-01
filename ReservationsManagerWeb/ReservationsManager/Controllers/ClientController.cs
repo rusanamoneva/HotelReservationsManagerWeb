@@ -15,29 +15,20 @@ using System.Threading.Tasks;
 
 namespace ReservationsManager.Controllers
 {
-    //[Authorize(Roles = "User")]
     [Authorize]
     public class ClientController : Controller
     {
         private readonly ILogger<ClientController> _logger;
+
         private const int PageSize = 10;
+
         private readonly ReservationsManagerDb _context;
 
-        public ClientController(ILogger<ClientController> logger)
+        public ClientController(ILogger<ClientController> logger, ReservationsManagerDb context)
         {
             _logger = logger;
-            _context = new ReservationsManagerDb();
+            _context = context;
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        //public IActionResult Privacy()
-        //{
-        //    return View();
-        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -179,7 +170,8 @@ namespace ReservationsManager.Controllers
             _context.Clients.Remove(client);
             _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
+            return View("Delete");
         }
 
         [AllowAnonymous]

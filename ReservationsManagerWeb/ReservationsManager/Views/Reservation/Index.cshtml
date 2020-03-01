@@ -1,5 +1,4 @@
-﻿@*@model IEnumerable<ReservationsManager.Models.Reservation.ReservationIndexViewModel>*@
-@using ReservationsManager.Models.Reservation
+﻿@using ReservationsManager.Models.Reservation
 @model ReservationsManager.Models.Reservation.ReservationIndexViewModel
 @{
     ViewData["Title"] = "Index";
@@ -50,9 +49,7 @@
                 @if (this.User.Identity.IsAuthenticated)
                 {
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a>*@
             </td>
                 }
             </tr>

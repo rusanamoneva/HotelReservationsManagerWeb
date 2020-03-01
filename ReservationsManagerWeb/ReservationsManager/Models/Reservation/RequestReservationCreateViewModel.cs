@@ -13,17 +13,11 @@ namespace ReservationsManager.Models.Reservation
 
         public virtual Data.Entities.Room Room { get; set; }
 
-        //public int UserId { get; set; }
-
         public virtual User User { get; set; }
-
-        //public virtual List<Client> Clients { get; set; }
 
         public List<int> ClientsId { get; set; }
 
         public int RoomId { get; set; }
-
-        //public Room roomAdded { get; set; }
 
         [Required]
         public DateTime CheckInDate { get; set; }

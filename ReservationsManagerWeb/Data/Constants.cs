@@ -9,6 +9,7 @@ namespace Data
         public const string connectionString = 
             @"Server=.\SQLEXPRESS;Database=HotelReservationsManagerDb;Trusted_Connection=True;Integrated Security = True;";
 
+
         public const string emailPassword = "testpass_01";
     }
 }

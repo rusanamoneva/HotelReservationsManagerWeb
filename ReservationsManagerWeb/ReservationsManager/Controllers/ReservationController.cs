@@ -34,22 +34,12 @@ namespace ReservationsManager.Controllers
 
         private UserManager<User> UserManager { get; set; }
 
-        public ReservationController(ILogger<ReservationController> logger, UserManager<User> userManager)
+        public ReservationController(ILogger<ReservationController> logger, ReservationsManagerDb context, UserManager<User> userManager)
         {
             _logger = logger;
-            _context = new ReservationsManagerDb();
+            _context = context;
             this.UserManager = userManager;
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        //public IActionResult Privacy()
-        //{
-        //    return View();
-        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -72,6 +62,7 @@ namespace ReservationsManager.Controllers
                 CheckOutDate = r.CheckOutDate,
                 HasBreakfast = r.HasBreakfast,
                 IsAllInclusive = r.IsAllInclusive,
+                FinalPrice = r.FinalPrice,
                 ClientReservations = r.ClientReservations.ToList()
             }).ToListAsync();
 
@@ -114,13 +105,9 @@ namespace ReservationsManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RequestReservationCreateViewModel createModel)
         {
-            //User user = _context.Users.Find(userManager.GetUserId(User));
-
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
-            //var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             User user = await UserManager.GetUserAsync(User);
-            //string userEmail = user?.Email; // will give the user's Email
 
             List<Client> clients = new List<Client>();
 
@@ -134,10 +121,6 @@ namespace ReservationsManager.Controllers
 
             Room room = _context.Rooms.FirstOrDefault(x => x.Id == createModel.RoomId);
             room.IsFree = false;
-            //room = _context.Rooms.FirstOrDefault(x => x.Id == createModel.RoomId);
-
-            //ClientReservation clientReservation = new ClientReservation();
-            //clientReservation.Client = clients[0];
 
             if (ModelState.IsValid)
             {
@@ -151,6 +134,7 @@ namespace ReservationsManager.Controllers
                     HasBreakfast = createModel.HasBreakfast,
                     IsAllInclusive = createModel.IsAllInclusive,
                     Room = room,
+                    FinalPrice = createModel.FinalPrice,
                     ClientReservations = clients.Select(client => new ClientReservation { Client = client }).ToList()
                 };
 
@@ -258,19 +242,12 @@ namespace ReservationsManager.Controllers
             _context.Reservations.Remove(reservation);
             _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return View("Delete");
         }
-
-        //public async Task<IActionResult> Details(ReservationDetailsViewModel model)
-        //{
-
-
-        //    return View(model);
-        //}
 
         private bool ReservationExists(int id)
         {
-            return _context.Reservations.Any(e => e.Id == id);
+            return _context.Reservations.Any(r => r.Id == id);
         }
     }
 }

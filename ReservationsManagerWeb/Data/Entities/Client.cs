@@ -12,7 +12,7 @@ namespace Data.Entities
 
         public string Surname { get; set; }
 
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         public string Email { get; set; }
 
@@ -23,7 +23,7 @@ namespace Data.Entities
         public Client()
         { }
 
-        public Client(string name, string surname, int phoneNumber, string email, bool isAdult, ICollection<ClientReservation> clientReservations)
+        public Client(string name, string surname, string phoneNumber, string email, bool isAdult, ICollection<ClientReservation> clientReservations)
         {
             Name = name;
             Surname = surname;

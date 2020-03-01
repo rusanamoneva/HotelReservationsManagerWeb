@@ -17,7 +17,7 @@ namespace ReservationsManager.Models.Client
         public string Surname { get; set; }
 
         [Required]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         public string Email { get; set; }
 
@@ -26,7 +26,7 @@ namespace ReservationsManager.Models.Client
         public ClientCreateViewModel()
         { }
 
-        public ClientCreateViewModel(string name, string surname, int phoneNumber, string email, bool isAdult)
+        public ClientCreateViewModel(string name, string surname, string phoneNumber, string email, bool isAdult)
         {
             Name = name;
             Surname = surname;

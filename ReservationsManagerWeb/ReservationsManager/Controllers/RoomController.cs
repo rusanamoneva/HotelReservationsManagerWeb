@@ -21,24 +21,16 @@ namespace ReservationsManager.Controllers
     public class RoomController : Controller
     {
         private readonly ILogger<RoomController> _logger;
+
         private const int PageSize = 10;
+
         private readonly ReservationsManagerDb _context;
 
-        public RoomController(ILogger<RoomController> logger)
+        public RoomController(ILogger<RoomController> logger, ReservationsManagerDb context)
         {
             _logger = logger;
-            _context = new ReservationsManagerDb();
+            _context = context;
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        //public IActionResult Privacy()
-        //{
-        //    return View();
-        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -83,9 +75,6 @@ namespace ReservationsManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RoomsCreateViewModel createModel)
         {
-            //RoomTypeEnum roomTypeEnum = new RoomTypeEnum();
-            //roomTypeEnum = (RoomTypeEnum)(createModel.RoomType);
-
             if (ModelState.IsValid)
             {
                 Room room = new Room
@@ -185,7 +174,7 @@ namespace ReservationsManager.Controllers
             _context.Rooms.Remove(room);
             _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return View("Delete");
         }
 
         [AllowAnonymous]
@@ -193,12 +182,6 @@ namespace ReservationsManager.Controllers
         {
             var rooms = from r in _context.Rooms
                           select r;
-
-            //if (!String.IsNullOrEmpty(searchString))
-
-            //{
-            //    rooms = rooms.Where(s => (string)s.RoomType == searchString);
-            //}
 
             rooms = rooms.Where(r => r.Capacity == searchString);
 

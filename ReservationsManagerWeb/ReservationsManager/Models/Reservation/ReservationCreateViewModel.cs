@@ -9,15 +9,9 @@ namespace ReservationsManager.Models.Reservation
 {
     public class ReservationCreateViewModel
     {
-        //public int RoomId { get; set; }
-
         public virtual Data.Entities.Room Room { get; set; }
 
-        //public int UserId { get; set; }
-
         public virtual User User { get; set; }
-
-        //public virtual List<Client> Clients { get; set; }
 
         public List<ReservationCreateClientViewModel> CreateClient { get; set; }
 
